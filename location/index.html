@@ -15,11 +15,17 @@
   <!-- Para o texto acompanhar a direção da câmara -->
   <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
 
-  <style>
-    body {
-      margin: 0;
-      overflow: hidden;
-      font-family: Arial, sans-serif;
+  <a-scene
+  vr-mode-ui="enabled: false"
+  embedded
+  renderer="alpha: true; antialias: true"
+  arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false;">
+
+  <a-camera gps-new-camera="gpsMinDistance: 1"></a-camera>
+
+  <!-- Os teus objetos GPS ficam aqui -->
+
+</a-scene>
     }
 
     #info {

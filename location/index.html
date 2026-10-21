@@ -1,4 +1,4 @@
-
+```html
 <!DOCTYPE html>
 <html lang="pt">
 <head>
@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AR por Geolocalização - EsACT IPB</title>
 
+  <!-- A-Frame -->
   <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
 
   <!-- AR.js: realidade aumentada baseada em localização -->
@@ -15,17 +16,11 @@
   <!-- Para o texto acompanhar a direção da câmara -->
   <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
 
-  <a-scene
-  vr-mode-ui="enabled: false"
-  embedded
-  renderer="alpha: true; antialias: true"
-  arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false;">
-
-  <a-camera gps-new-camera="gpsMinDistance: 1"></a-camera>
-
-  <!-- Os teus objetos GPS ficam aqui -->
-
-</a-scene>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
     }
 
     #info {
@@ -58,6 +53,9 @@
     renderer="alpha: true; antialias: true"
     arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false;">
 
+    <!-- Câmara e localização do utilizador -->
+    <a-camera gps-new-camera="gpsMinDistance: 1"></a-camera>
+
     <!-- 1. CUBO VERMELHO -->
     <a-box
       gps-new-entity-place="latitude: 41.478028; longitude: -7.180306"
@@ -89,9 +87,6 @@
       </a-text>
     </a-entity>
 
-    <!-- Câmara e localização do utilizador -->
-    <a-camera gps-new-camera="gpsMinDistance: 1"></a-camera>
-
   </a-scene>
 
   <script>
@@ -120,3 +115,4 @@
   </script>
 </body>
 </html>
+```

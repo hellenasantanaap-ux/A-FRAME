@@ -1,118 +1,66 @@
-```html
 <!DOCTYPE html>
 <html lang="pt">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AR por Geolocalização - EsACT IPB</title>
-
-  <!-- A-Frame -->
-  <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
-
-  <!-- AR.js: realidade aumentada baseada em localização -->
-  <script src="https://raw.githack.com/AR-js-org/AR.js/3.4.7/three.js/build/ar-threex-location-only.js"></script>
-  <script src="https://raw.githack.com/AR-js-org/AR.js/3.4.7/aframe/build/aframe-ar.js"></script>
-
-  <!-- Para o texto acompanhar a direção da câmara -->
-  <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
-
-  <style>
-    body {
-      margin: 0;
-      overflow: hidden;
-      font-family: Arial, sans-serif;
-    }
-
-    #info {
-      position: fixed;
-      z-index: 10;
-      top: 10px;
-      left: 10px;
-      right: 10px;
-      padding: 12px;
-      border-radius: 8px;
-      color: white;
-      background: rgba(0, 0, 0, 0.75);
-      font-size: 14px;
-      line-height: 1.5;
-      pointer-events: none;
-    }
-  </style>
-</head>
-
-<body>
-  <div id="info">
-    <strong>EsACT–IPB | AR por GPS</strong>
-    <div id="status">A iniciar a experiência...</div>
-    <div>Local-alvo: Mirandela, Portugal</div>
-  </div>
-
-  <a-scene
-    vr-mode-ui="enabled: false"
-    embedded
-    renderer="alpha: true; antialias: true"
-    arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false;">
-
-    <!-- Câmara e localização do utilizador -->
-    <a-camera gps-new-camera="gpsMinDistance: 1"></a-camera>
-
-    <!-- 1. CUBO VERMELHO -->
-    <a-box
-      gps-new-entity-place="latitude: 41.478028; longitude: -7.180306"
-      position="0 3 0"
-      scale="3 3 3"
-      material="color: #ff3333"
-      animation="property: rotation; to: 0 360 0; loop: true; dur: 5000; easing: linear">
-    </a-box>
-
-    <!-- 2. ESFERA VERDE: posição ligeiramente a norte -->
-    <a-sphere
-      gps-new-entity-place="latitude: 41.478128; longitude: -7.180306"
-      position="0 3 0"
-      radius="2"
-      material="color: #33dd77">
-    </a-sphere>
-
-    <!-- 3. TEXTO AZUL: posição ligeiramente a sul -->
-    <a-entity
-      gps-new-entity-place="latitude: 41.477928; longitude: -7.180306"
-      position="0 4 0">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Objetos baseados na localização GPS</title>
+    <style>
+      body { margin: 0; overflow: hidden; }
+    </style>
+    
+    <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@ar-js-org/ar.js@3.4.8/aframe/build/aframe-ar.js"></script>
+    
+  </head>
+  <body>
+    <a-scene
+      vr-mode-ui="enabled: false"
+      renderer="antialias: false; alpha: true; precision: medium"
+      arjs="sourceType: webcam; videoTexture: false; debugUIEnabled: false; sourceWidth: 960; sourceHeight: 720;">
+      
+      <a-camera
+        gps-camera="simulateLatitude: 51.049; simulateLongitude: -0.723; gpsMinDistance: 10; positionMinAccuracy: 50"
+        rotation-reader
+      ></a-camera>
 
       <a-text
-        value="Bem-vindo a EsACT!"
-        color="#66ccff"
+        value="Ola Mundo!"
+        scale="6 6 6"
         align="center"
-        scale="10 10 10"
-        look-at="[gps-new-camera]">
-      </a-text>
-    </a-entity>
+        color="#ff0000"
+        gps-entity-place="latitude: 51.0491; longitude: -0.723;"
+      ></a-text>
 
-  </a-scene>
+      <a-text
+        value="Sul"
+        scale="6 6 6"
+        align="center"
+        color="#00aa00"
+        gps-entity-place="latitude: 51.0489; longitude: -0.723;"
+      ></a-text>
 
-  <script>
-    const status = document.getElementById("status");
+      <a-box
+        color="#2196f3"
+        scale="3 3 3"
+        position="0 2 0"
+        gps-entity-place="latitude: 51.049; longitude: -0.7229;"
+      ></a-box>
 
-    const camera = document.querySelector("[gps-new-camera]");
+      <a-sphere
+        color="#ff9800"
+        radius="2"
+        position="0 4 0"
+        gps-entity-place="latitude: 51.049; longitude: -0.7231;"
+      ></a-sphere>
 
-    camera.addEventListener("gps-camera-update-position", (event) => {
-      const position = event.detail.position;
-
-      status.textContent =
-        "GPS ativo. Latitude: " +
-        position.latitude.toFixed(6) +
-        " | Longitude: " +
-        position.longitude.toFixed(6);
-    });
-
-    camera.addEventListener("gps-camera-error", () => {
-      status.textContent =
-        "Não foi possível obter a localização. Verifica as permissões.";
-    });
-
-    window.addEventListener("error", (event) => {
-      console.error("Erro na experiência AR:", event.message);
-    });
-  </script>
-</body>
+      <a-cone
+        color="#9c27b0"
+        radius-bottom="1.5"
+        radius-top="0"
+        height="4"
+        position="0 2 0"
+        gps-entity-place="latitude: 51.0491; longitude: -0.7229;"
+      ></a-cone>
+    </a-scene>
+  </body>
 </html>
-```
